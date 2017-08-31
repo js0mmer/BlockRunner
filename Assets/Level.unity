@@ -884,9 +884,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1016075316}
-        m_MethodName: StartGame
-        m_Mode: 3
+      - m_Target: {fileID: 1282970052}
+        m_MethodName: Quit
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2289,7 +2289,6 @@ Prefab:
     m_RemovedComponents:
     - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 50190cc3d6135ad4483ceaef15b254c5, type: 2}
-  m_RootGameObject: {fileID: 1378496832}
   m_IsPrefabParent: 0
 --- !u!1 &1871172075
 GameObject:

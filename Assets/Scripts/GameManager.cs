@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour {
 
             for (int i = 0; i < spawnAmount; i++)
             {
-                float rand = Random.Range(spawnRange[0], spawnRange[1] + 1); ;
+                float rand = Random.Range(spawnRange[0], spawnRange[1] + 1);
 
                 if(i == 1)
                 {
