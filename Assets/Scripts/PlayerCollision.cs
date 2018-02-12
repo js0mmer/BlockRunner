@@ -15,7 +15,7 @@ public class PlayerCollision : MonoBehaviour {
 
     void Update()
     {
-        if(movement.transform.position.y <= 0f)
+        if(movement.transform.position.y <= 0.5f)
         {
             movement.enabled = false;
             FindObjectOfType<GameManager>().EndGame();

@@ -6,11 +6,11 @@ public class ObstacleMovement : MonoBehaviour {
     public float force;
 	
 	void FixedUpdate () {
-        if(!FindObjectOfType<GameManager>().stop) { 
-
+        if(!FindObjectOfType<GameManager>().stop && gameObject.activeInHierarchy)
+        { 
             if (obstacle.transform.position.z < -10f)
             {
-                Destroy(this.gameObject);
+                gameObject.SetActive(false);
             }
 
             obstacle.AddForce(0, 0, -force * Time.deltaTime);

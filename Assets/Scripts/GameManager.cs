@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -9,6 +10,7 @@ public class GameManager : MonoBehaviour {
     public bool stop = false;
     public GameObject difficultyMenu;
     public GameObject gameOver;
+    public GameObject pauseMenu;
     public Text gameOverScore;
     public Text score;
     public Text highscore;
@@ -23,6 +25,8 @@ public class GameManager : MonoBehaviour {
 
     float timeBefore = 0;
     bool gameEnded = false;
+    bool isPaused = false;
+    ObjectPooler objectPooler;
 
     public void StartGame(int spawnAmount)
     {
@@ -34,10 +38,31 @@ public class GameManager : MonoBehaviour {
         timeBefore = Time.time;
     }
 
+    private void Start()
+    {
+        objectPooler = ObjectPooler.Instance;
+        isPaused = false;
+        Time.timeScale = 1f;
+        gameEnded = false;
+        stop = false;
+    }
+
     void Update()
     {
         if (!stop) {
             score.text = ((Time.time - timeBefore) * 10).ToString("0");
+        }
+
+        if (Input.GetButtonDown("Cancel"))
+        {
+            if (isPaused)
+            {
+                Resume();
+            }
+            else if (!difficultyMenu.activeInHierarchy && !gameOver.activeInHierarchy)
+            {
+                Pause();
+            }
         }
     }
 
@@ -78,7 +103,7 @@ public class GameManager : MonoBehaviour {
                 }
 
                 previousRand[i] = rand;
-                Instantiate(obstacle, spawnLocation + new Vector3(rand * 2, 0, 0), obstacle.transform.rotation);
+                objectPooler.SpawnFromPool("Obstacle", spawnLocation + new Vector3(rand * 2, 0, 0), obstacle.transform.rotation);
             }
 
             yield return new WaitForSeconds(spawnDelay);
@@ -110,6 +135,35 @@ public class GameManager : MonoBehaviour {
     {
         gameOver.SetActive(true);
         es.SetSelectedGameObject(restartButton);
+    }
+
+    public void Resume()
+    {
+        Time.timeScale = 1f;
+        isPaused = false;
+        pauseMenu.SetActive(false);
+    }
+
+    private void Pause()
+    {
+        Time.timeScale = 0f;
+        isPaused = true;
+        pauseMenu.SetActive(true);
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void ToMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 }
 
