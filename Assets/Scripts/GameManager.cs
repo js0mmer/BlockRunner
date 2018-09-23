@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour {
     public GameObject player;
     public EventSystem es;
     public GameObject restartButton;
+    public GameObject easyButton;
+    public GameObject resumeButton;
+    public GameObject pauseButton;
     public Vector3 spawnLocation;
     public int[] spawnRange;
     public int spawnAmount;
@@ -36,6 +39,8 @@ public class GameManager : MonoBehaviour {
         difficultyMenu.SetActive(false);
         score.gameObject.SetActive(true);
         timeBefore = Time.time;
+
+        if(Application.platform == RuntimePlatform.Android) pauseButton.SetActive(true);
     }
 
     private void Start()
@@ -45,6 +50,10 @@ public class GameManager : MonoBehaviour {
         Time.timeScale = 1f;
         gameEnded = false;
         stop = false;
+        if (Input.GetJoystickNames().Length > 0)
+        {
+            es.SetSelectedGameObject(easyButton);
+        }
     }
 
     void Update()
@@ -62,6 +71,20 @@ public class GameManager : MonoBehaviour {
             else if (!difficultyMenu.activeInHierarchy && !gameOver.activeInHierarchy)
             {
                 Pause();
+            }
+        }
+
+        if (es.currentSelectedGameObject == null && Input.GetJoystickNames().Length > 0)
+        {
+            if(difficultyMenu.activeInHierarchy)
+            {
+                es.SetSelectedGameObject(easyButton);
+            } else if(gameOver.activeInHierarchy)
+            {
+                es.SetSelectedGameObject(restartButton);
+            } else if(pauseMenu.activeInHierarchy)
+            {
+                es.SetSelectedGameObject(resumeButton);
             }
         }
     }
@@ -133,8 +156,12 @@ public class GameManager : MonoBehaviour {
 
     void GameOver()
     {
+        pauseButton.SetActive(false);
         gameOver.SetActive(true);
-        es.SetSelectedGameObject(restartButton);
+        if (Input.GetJoystickNames().Length > 0)
+        {
+            es.SetSelectedGameObject(restartButton);
+        }
     }
 
     public void Resume()
@@ -144,11 +171,16 @@ public class GameManager : MonoBehaviour {
         pauseMenu.SetActive(false);
     }
 
-    private void Pause()
+    public void Pause()
     {
         Time.timeScale = 0f;
         isPaused = true;
+        pauseButton.SetActive(false);
         pauseMenu.SetActive(true);
+        if (Input.GetJoystickNames().Length > 0)
+        {
+            es.SetSelectedGameObject(resumeButton);
+        }
     }
 
     public void Restart()

@@ -9,7 +9,7 @@ public class MainMenu : MonoBehaviour {
 
     void Update()
     {
-        if(Input.GetAxis("Vertical") > 0f || Input.GetAxis("Horizontal") > 0f || Input.GetAxis("Submit") > 0f)
+        if(es.currentSelectedGameObject == null && Input.GetJoystickNames().Length > 0)
         {
             es.SetSelectedGameObject(startButton);
         }
