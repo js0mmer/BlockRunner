@@ -169,6 +169,7 @@ public class GameManager : MonoBehaviour {
         Time.timeScale = 1f;
         isPaused = false;
         pauseMenu.SetActive(false);
+        if (Application.platform == RuntimePlatform.Android) pauseButton.SetActive(true);
     }
 
     public void Pause()
