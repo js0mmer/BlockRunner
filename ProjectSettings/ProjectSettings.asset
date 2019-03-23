@@ -241,6 +241,7 @@ PlayerSettings:
   tvOSManualSigningProvisioningProfileType: 0
   appleEnableAutomaticSigning: 0
   iOSRequireARKit: 0
+  iOSAutomaticallyDetectAndAddCapabilities: 1
   appleEnableProMotion: 0
   clonedFromGUID: 00000000000000000000000000000000
   templatePackageId: 
@@ -801,7 +802,7 @@ PlayerSettings:
   apiCompatibilityLevel: 2
   cloudProjectId: b53d6316-6788-459d-b4ae-6eef8a790f0c
   framebufferDepthMemorylessMode: 0
-  projectName: Block Runner (1)
+  projectName: Block Runner
   organizationId: js0mmer
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
